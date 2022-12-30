@@ -2,14 +2,10 @@ clear all; close all; clc;
 numProp = 1;
 numRuns = 30;
 
-% M1s = 53.18; %mph
-% M2s = 68.18;
-% M3s = 68.18;
-
 % mph
-M1s = 48.32;
-M2s = 70.69;
-M3s = 54.80;
+M1s = 53.18;
+M2s = 47.7;
+M3s = 47.7;
 
 % Mission Drag Estimates (lbsf)
 D1 = linspace(1.45,2.45,numRuns)/numProp; % 1.95 lbsf
@@ -21,14 +17,23 @@ V1 = [M1s-5, M1s, M1s+5];
 V2 = [M2s-5, M2s, M2s+5];
 V3 = [M3s-5, M3s, M3s+5];
 
-running1 = zeros(41,21);
-running2 = zeros(41,21);
-running3 = zeros(41,21);
+% Number of datasheet inputs in DataImport.mat (only change if you add new
+% datasheets
+num_prop_datasheets = 95;
+num_motor_datasheets = 21;
+
+% Creates an array of zeros that will be filled when importing data from
+% the propeller and motor datasheets in DataImport.mat
+running1 = zeros(num_prop_datasheets,num_motor_datasheets);
+running2 = zeros(num_prop_datasheets,num_motor_datasheets);
+running3 = zeros(num_prop_datasheets,num_motor_datasheets);
 c1 = running1;
 c2 = running2;
 c3 = running3;
 c=1;
 Data = cell(numRuns,1);
+
+% Uses Propulsion_analysis_fun.m to do analysis
 for n = 1:numRuns
     Mreq{1} = [D1(n) M1s];
     Mreq{2} = [D2(n) M2s];
@@ -68,6 +73,7 @@ fprintf(sprintf('M1: %s %s\n',Propnames{p1},Motornames{m1}));
 fprintf(sprintf('M2: %s %s\n',Propnames{p2},Motornames{m2}));
 fprintf(sprintf('M3: %s %s\n',Propnames{p3},Motornames{m3}));
 return
+
 % Plotting
 figure
 plot(f1)

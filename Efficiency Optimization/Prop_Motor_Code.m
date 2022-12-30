@@ -8,7 +8,7 @@
 %   
 %   Last Editted by
 %   Kevin Vo
-%   1/22/22.
+%   12/30/22.
 %   
 %---------------------------------------------------------------%
 %% Initialize
@@ -17,7 +17,7 @@ clear all; close all; format longg; clc;
 
 outfile = 'Results.xlsx';
 
-numProps = 2;   % Number of Propellers
+numProps = 1;   % Number of Propellers
 Voltage = 22.2; % Voltage of Battery *NOTE* Voltage does change throughout
                 % the flight, but the labeled volate is a fair average.
 
@@ -27,11 +27,12 @@ Voltage = 22.2; % Voltage of Battery *NOTE* Voltage does change throughout
 % Assuming steady level flight: Thrust = Drag
 % [Thrust/numProps CruiseAirspeed]
 % [lbsf MPH]
-Mreq{1} = [0.9044/numProps 53.18];
-Mreq{2} = [1.4238/numProps 68.18];
-Mreq{3} = [1.4238/numProps 68.18];
+Mreq{1} = [0.413/numProps 53.18];
+Mreq{2} = [0.336/numProps 47.7];
+Mreq{3} = [0.336/numProps 47.7];
 
-% Import Propeller & Motor Datasheets
+% Import Propeller & Motor Datasheets (Make sure to overwrite old
+% DataImport.mat after rerunning 
 load('DataImport.mat')
 
 %% Propeller Analysis & Mission Performance Criteria
@@ -135,8 +136,6 @@ end
 for MISSION=1:3
     maxeff(MISSION) = max(max(eta_net{MISSION}));
     [bestprop, bestmotor] = find(eta_net{MISSION} == maxeff(MISSION));
-    bestprop = 20;
-    bestmotor = 11;
     best_combo{1,MISSION} = sprintf('Mission %0.f Optimized',MISSION);
     best_combo{2,MISSION} = sprintf('%0.f: %s',bestprop,Propnames{bestprop});
     best_combo{3,MISSION} = sprintf('%0.f: %s',bestmotor,Motornames{bestmotor});
