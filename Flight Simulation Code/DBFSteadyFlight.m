@@ -16,7 +16,7 @@ S = WingSurfaceArea;
 a = MotorAngle*0.0174533;
 
 %Assign constants 
-g = 9.81;
+g = 9.79247; % For Tucson, Az (m/s^2)
 R = 1.225; %Density of air (kg/m^3)
 
 %Calculate velocity
