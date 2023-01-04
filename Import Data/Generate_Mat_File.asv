@@ -25,8 +25,9 @@
 %   Propulsions Lead 2019-2021
 %   
 %   Last Editted by
-%   Ryan Dunn
-%   1/23/2020
+%   Kevin Vo
+%   Propulsions Lead 2021
+%   1/10/2021
 
 %% Variable Legend
 % -------------- Input Variables --------------
@@ -40,14 +41,15 @@
 
 % -------------- Output Variables in DataImport.mat --------------
 
-% Motornames = contains the names of 
+% Motornames = contains the names of motors
 % Kv = ratio of the motor's unloaded rpm to the peak voltage on the wires
 % connected  to the coils [RPM/Volt] This rating is helpful to determine
 % how fast a motor will rotate when a given voltage is applied to it.
-% I0 = No-Load Current @ 10 Volts [Amps]
+% I0 = No-Load Current @ 10 Volts: The no-load current is the current 
+% required just to turn the motor shaft with nothing connected. [Amps]
 % Rm = Motor Resistance [Ohms]
 
-% Propnames = name of propeller
+% Propnames = name of propeller ([propeller diameter, pitch])
 % diameter = propeller diameter [in]
 % pitch = propeller pitch [in]
 % maxRPM = maximum RPM of propeller
@@ -57,8 +59,8 @@
 % Ct = thrust coefficient (Ct=T/(rho * n**2 * D**4))
 % Cp = power coefficient (Cp=P/(rho * n**3 * D**5))
 % PWR = power [Hp]
-% Torque = torque [In-lbf]
-% Thrust = thrust [lbf]
+% Qprop = propeller torque [In-lbf]
+% T = thrust [lbf]
 
 %% Initialize
 clear all; close all; format longg; clc;
@@ -104,7 +106,42 @@ PropFiles  = {'6x4E.xlsx'
             '14x7E.xlsx'
             '14x85E.xlsx'
             '14x10E.xlsx'
-            '15x8.xlsx'};
+            '15x8.xlsx'
+
+            '10x3'
+            '10x4'
+            '10x5'
+            '10x6-4'
+            '10x7-3'
+            '10x8'
+            '11x3'
+            '11x4'
+            '11x6-4'
+            '11x8'
+            '11x9-4'
+            '11x10'
+            '11x12'
+            '11x13'
+            '11x14'
+            '11x45EP'
+            '11x85E'
+            '12x4'
+            '12x5'
+            '12x6'
+            '12x6E'
+            '12x7'
+            '12x9'
+            '12x10'
+            '12x11'
+            '12x12'
+            '12x12E'
+            '12x13'
+            '12x14'
+            '13x4E'
+            '13x6'
+            '13x13-4'
+            '13x14'
+            '13x4'};
 
 %% Initialize & Import
 
@@ -142,7 +179,8 @@ for i=1:(size(insheet,1)-1)
 end
 fprintf('imported motors successfully\n');
 
-clear FILE temp i PropFiles MotorFile insheet
+%clear FILE temp i PropFiles MotorFile insheet
+clear FILE temp i MotorFile insheet
 
 save('DataImport.mat')
 fprintf('done\n')
