@@ -19,7 +19,7 @@ V3 = [M3s-5, M3s, M3s+5];
 
 % Number of datasheet inputs in DataImport.mat (only change if you add new
 % datasheets
-num_prop_datasheets = 232;
+num_prop_datasheets = 267;
 num_motor_datasheets = 47;
 
 % Creates an array of zeros that will be filled when importing data from

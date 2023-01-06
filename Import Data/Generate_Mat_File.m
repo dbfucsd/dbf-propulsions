@@ -27,7 +27,7 @@
 %   Last Editted by
 %   Kevin Vo
 %   Propulsions Lead 2022
-%   12/30/2022
+%   1/6/2023
 
 %% Variable Legend
 % -------------- Input Variables --------------
@@ -49,7 +49,7 @@
 % required just to turn the motor shaft with nothing connected. [Amps]
 % Rm = Motor Resistance [Ohms]
 
-% Propnames = name of propeller ([propeller diameter, pitch])
+% Propnames = name of propeller ([propeller diameter x pitch])
 % diameter = propeller diameter [in]
 % pitch = propeller pitch [in]
 % maxRPM = maximum RPM of propeller
@@ -66,13 +66,53 @@
 clear all; close all; format longg; clc;
 %% Input Sheets
 MotorFile = 'Motor_data.xlsx';
-PropFiles  = {'5x3.xlsx'
+
+% Add propeller datasheets to the generated .mat file by adding a string of
+% the file name to the variable below. The whole list is organized by
+% propeller diameter and pitch. NOTE: If the propeller diameter is in the
+% double digits in a section that has a single digit diameter, it means
+% that value is a decimal value. e.g. 41x41E is 4.1 inch diameter x 4.1
+% pitch
+PropFiles  = {
+
+            % --------------- 4 Inch ---------------
+            '41x41E.xlsx'
+            '42x2.xlsx'
+            '42x4.xlsx'
+            '4375x425.xlsx'
+            '45x35.xlsx'
+            '45x4.xlsx'
+            '45x41E.xlsx'
+            '46x3.xlsx'
+            '475x4.xlsx'
+            '475x45E.xlsx'
+            '475x475E.xlsx'
+            '475x55E.xlsx'
+            '47x42E.xlsx'
+            '4x33E.xlsx'
+            '4x45E.xlsx'
+
+            % --------------- 5 Inch ---------------
+            '5x3.xlsx'
             '5x3E.xlsx'
             '5x43E.xlsx'
             '5x45E.xlsx'
             '5x46E.xlsx'
             '5x4E-3.xlsx'
             '5x5E.xlsx'
+            '51x45E.xlsx'
+            '51x50E.xlsx'
+            '52x60E.xlsx'
+            '525x475E.xlsx'
+            '525x625E.xlsx'
+            '55x2.xlsx'
+            '55x25.xlsx'
+            '55x45E.xlsx'
+            '55x47E.xlsx'
+            '55x65E.xlsx'
+            '57x3.xlsx'
+
+            % --------------- 6 Inch ---------------
             '6x2.xlsx'
             '6x3.xlsx'
             '6x4E.xlsx'
@@ -89,38 +129,43 @@ PropFiles  = {'5x3.xlsx'
             '65x60.xlsx'
             '65x65.xlsx'
             '65x70.xlsx'
-            '75x25.xlsx'
-            '78x4.xlsx'
+
+            % --------------- 7 Inch --------------- 
             '7x3.xlsx'
+            '7x4E.xlsx' 
             '7x5.xlsx'
             '7x5E.xlsx'
             '7x6.xlsx'
             '7x6E.xlsx'
+            '7x65D.xlsx'
             '7x7.xlsx'
             '7x7E.xlsx'
             '7x8.xlsx'
             '7x9.xlsx'
             '7x10.xlsx'
-            '7x65D.xlsx'
+            '75x25.xlsx'
+            '78x4.xlsx'
+            '78x6.xlsx'
+            '78x7.xlsx'
+
+            % --------------- 8 Inch ---------------
             '8x4.xlsx'
             '8x4E.xlsx'
             '8x5.xlsx'
+            '8x6E.xlsx'
             '8x7.xlsx'
             '8x8.xlsx'
+            '8x8E.xlsx'
             '8x9.xlsx'
             '8x10.xlsx'
             '8x375.xlsx'
             '8x725.xlsx'
-            '9x3.xlsx'
-            '9x4.xlsx'
-            '9x10.xlsx'
-            '9x45E.xlsx'
-            '78x6.xlsx'
-            '78x7.xlsx'
             '85x55.xlsx'
             '85x70.xlsx'
             '85x75.xlsx'
             '85x725.xlsx'
+            '8625x375.xlsx'
+            '875x50.xlsx'
             '88x85.xlsx'
             '88x89.xlsx'
             '88x90.xlsx'
@@ -128,51 +173,100 @@ PropFiles  = {'5x3.xlsx'
             '88x875.xlsx'
             '88x925.xlsx'
             '88x975.xlsx'
-            '93x3.xlsx'
-            '95x6.xlsx'
-            '95x45.xlsx'
-            '875x50.xlsx'
-            '925x50.xlsx'
-            '925x55.xlsx'
-            '925x60.xlsx'
-            '925x525.xlsx'
-            '925x575.xlsx'
-            '8625x375.xlsx'
-            '7x4E.xlsx'
-            '8x6E.xlsx'
-            '8x8E.xlsx'
+
+            % --------------- 9 Inch ---------------
+            '9x3.xlsx'
+            '9x4.xlsx'
+            '9x45E.xlsx'
             '9x6.xlsx'
             '9x6E.xlsx'
+            '9x65.xlsx'
+            '9x75.xlsx'
+            '9x75E.xlsx'
+            '9x85.xlsx'
+            '9x10.xlsx'
+            '925x50.xlsx'
+            '925x525.xlsx'
+            '925x55.xlsx'
+            '925x575.xlsx'
+            '925x60.xlsx'
+            '93x3.xlsx'
+            '95x45.xlsx'
+            '95x6.xlsx'
+
+            % --------------- 10 Inch ---------------           
+            '10x3.xlsx'
+            '10x4.xlsx'
+            '10x5.xlsx'
             '10x5E.xlsx'
             '10x6.xlsx'
             '10x6E.xlsx'
+            '10x6-4.xlsx'
             '10x7.xlsx'
             '10x7E.xlsx'
+            '10x7-3.xlsx'
+            '10x8.xlsx'
             '10x8E.xlsx'
             '10x9.xlsx'
             '10x10.xlsx'
             '10x10E.xlsx'
+
+            % --------------- 11 Inch ---------------
+            '11x3.xlsx'
+            '11x4.xlsx'
+            '11x45EP.xlsx'
             '11x5.xlsx'
             '11x55E.xlsx'
             '11x6.xlsx'
+            '11x6-4.xlsx'
             '11x7.xlsx'
             '11x7E.xlsx'
+            '11x8.xlsx'
             '11x8E.xlsx'
+            '11x85E.xlsx'
             '11x9.xlsx'
+            '11x9-4.xlsx'
+            '11x10.xlsx'
             '11x10E.xlsx'
             '11x11.xlsx'
+            '11x12.xlsx'
             '11x12E.xlsx'
+            '11x13.xlsx'
+            '11x14.xlsx'
+
+            % --------------- 12 Inch ---------------
+            '12x4.xlsx'
+            '12x5.xlsx'
+            '12x6.xlsx'
+            '12x6E.xlsx'
+            '12x7.xlsx'
             '12x8.xlsx'
             '12x8E.xlsx'
+            '12x9.xlsx'
+            '12x10.xlsx'
             '12x10E.xlsx'
+            '12x11.xlsx'
+            '12x12.xlsx'
+            '12x12E.xlsx'
+            '12x13.xlsx'
+            '12x14.xlsx'
+
+            % --------------- 13 Inch ---------------
             '13x4.xlsx'
+            '13x4E.xlsx'
+            '13x45EP.xlsx'
+            '13x55E.xlsx'
+            '13x6.xlsx'
             '13x65E.xlsx'
             '13x7.xlsx'
             '13x8.xlsx'
-            '13x9.xlsx'
             '13x8E.xlsx'
+            '13x9.xlsx'
             '13x10E.xlsx'
             '13x11.xlsx'
+            '13x13-4.xlsx'
+
+            % --------------- 14 Inch ---------------
             '14x6.xlsx'
             '14x6E.xlsx'
             '14x7.xlsx'
@@ -186,6 +280,8 @@ PropFiles  = {'5x3.xlsx'
             '14x135.xlsx'
             '14x14.xlsx'
             '14x14E.xlsx'
+
+            % --------------- 15 Inch ---------------
             '15x4E.xlsx'
             '15x6.xlsx'
             '15x6E.xlsx'
@@ -199,9 +295,11 @@ PropFiles  = {'5x3.xlsx'
             '15x11.xlsx'
             '15x12.xlsx'
             '15x13.xlsx'
-            '15x135.xlsx'
             '15x13W.xlsx'
+            '15x135.xlsx'
             '15x14.xlsx'
+
+            % --------------- 16 Inch ---------------
             '16x4E.xlsx'
             '16x6.xlsx'
             '16x6E.xlsx'
@@ -217,6 +315,8 @@ PropFiles  = {'5x3.xlsx'
             '16x14.xlsx'
             '16x15.xlsx'
             '16x16.xlsx'
+
+            % --------------- 17 Inch ---------------
             '17x6.xlsx'
             '17x6E.xlsx'
             '17x7E.xlsx'
@@ -229,7 +329,8 @@ PropFiles  = {'5x3.xlsx'
             '17x12E.xlsx'
             '17x13.xlsx'
             '17x18.xlsx'
-            '17x1275.xlsx'
+
+            % --------------- 18 Inch ---------------
             '18x8.xlsx'
             '18x8E.xlsx'
             '18x10.xlsx'
@@ -238,12 +339,19 @@ PropFiles  = {'5x3.xlsx'
             '18x12E.xlsx'
             '18x14.xlsx'
             '18x16.xlsx'
+            '181x11.xlsx'
+            '181x12.xlsx'
+            '185x95.xlsx'
+
+            % --------------- 19 Inch ---------------
             '19x8E.xlsx'
             '19x10E.xlsx'
             '19x11.xlsx'
             '19x12E.xlsx'
             '19x14.xlsx'
             '19x16.xlsx'
+
+            % --------------- 20 Inch ---------------
             '20x8.xlsx'
             '20x8E.xlsx'
             '20x10.xlsx'
@@ -255,51 +363,30 @@ PropFiles  = {'5x3.xlsx'
             '20x15E.xlsx'
             '20x16.xlsx'
             '20x18.xlsx'
+            '205x14E.xlsx'
+
+            % --------------- 21 Inch ---------------
             '21x13E.xlsx'
+            '21x135E.xlsx'
+
+            % --------------- 22 Inch ---------------
             '22x8.xlsx'
             '22x10.xlsx'
             '22x10E.xlsx'
             '22x12E.xlsx'
+
+            % --------------- 24 Inch ---------------
             '24x12E.xlsx'
+
+            % --------------- 25 Inch ---------------
+            '25x125E.xlsx'
+
+            % --------------- 26 Inch ---------------
             '26x13E.xlsx'
             '26x15E.xlsx'
-            '27x13E.xlsx'
-            
-            '10x3.xlsx'
-            '10x4.xlsx'
-            '10x5.xlsx'
-            '10x6-4.xlsx'
-            '10x7-3.xlsx'
-            '10x8.xlsx'
-            '11x3.xlsx'
-            '11x4.xlsx'
-            '11x6-4.xlsx'
-            '11x8.xlsx'
-            '11x9-4.xlsx'
-            '11x10.xlsx'
-            '11x12.xlsx'
-            '11x13.xlsx'
-            '11x14.xlsx'
-            '11x45EP.xlsx'
-            '11x85E.xlsx'
-            '12x4.xlsx'
-            '12x5.xlsx'
-            '12x6.xlsx'
-            '12x6E.xlsx'
-            '12x7.xlsx'
-            '12x9.xlsx'
-            '12x10.xlsx'
-            '12x11.xlsx'
-            '12x12.xlsx'
-            '12x12E.xlsx'
-            '12x13.xlsx'
-            '12x14.xlsx'
-            '13x4E.xlsx'
-            '13x6.xlsx'
-            '13x13-4.xlsx'
-            '13x45EP.xlsx'
-            '13x55E.xlsx'
 
+            % --------------- 27 Inch ---------------
+            '27x13E.xlsx'
             };
 
 %% Initialize & Import
