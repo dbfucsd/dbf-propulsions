@@ -98,11 +98,11 @@ clc;
 %% Input Parameters
 
 % MISSION 1 [2023 Setup]
-% cp  = 164; % choose propeller name for analysis (from Propnames)
-% cm = 5; % choose motor name for analysis (from Motornames)
-% Ampdraw = 44.3677;
-% RPMcruise = 4000;
-% speed = 53.18;
+cp  = 162; % choose propeller name for analysis (from Propnames)
+cm = 11; % choose motor name for analysis (from Motornames)
+Ampdraw = 75.6;
+RPMcruise = 6000;
+speed = 53.18;
 
 % % MISSION 2 [2023 Setup]
 % cp  = 86;
@@ -112,11 +112,11 @@ clc;
 % speed = 47.70;
 % 
 % % MISSION 3 [2023 Setup]
-cp  = 86;
-cm = 11;
-Ampdraw = 20.4572;
-RPMcruise = 7000;
-speed = 47.70;
+% cp  = 86;
+% cm = 11;
+% Ampdraw = 20.4572;
+% RPMcruise = 7000;
+% speed = 47.70;
 
 % Rated Battery Voltage (will vary throughout the flight, but assumed constant)
 Voltage = 22.2;

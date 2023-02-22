@@ -127,6 +127,7 @@ for MISSION = 1:3
     end
     for Motor=1:length(Motornames)
         outsheet{MISSION}{1,Motor+1} = Motornames{Motor};
+        
         outsheet{MISSION}{length(Propnames)+3,Motor+1} = Motornames{Motor};
     end
      
@@ -136,6 +137,8 @@ end
 for MISSION=1:3
     maxeff(MISSION) = max(max(eta_net{MISSION}));
     [bestprop, bestmotor] = find(eta_net{MISSION} == maxeff(MISSION));
+    bestprop = 162;
+    bestmotor = 11;
     best_combo{1,MISSION} = sprintf('Mission %0.f Optimized',MISSION);
     best_combo{2,MISSION} = sprintf('%0.f: %s',bestprop,Propnames{bestprop});
     best_combo{3,MISSION} = sprintf('%0.f: %s',bestmotor,Motornames{bestmotor});

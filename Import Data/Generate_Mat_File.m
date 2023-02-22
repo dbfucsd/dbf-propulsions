@@ -74,7 +74,16 @@ MotorFile = 'Motor_data.xlsx';
 % that value is a decimal value. e.g. 41x41E is 4.1 inch diameter x 4.1
 % pitch
 PropFiles  = {
-
+            
+            '1225x375.xlsx'
+            '125x10.xlsx'
+            '125x11.xlsx'
+            '125x115.xlsx'
+            '125x12.xlsx'
+            '125x125.xlsx'
+            '125x13.xlsx'
+            '125x6.xlsx'
+            '125x9.xlsx'
             % --------------- 4 Inch ---------------
             '41x41E.xlsx'
             '42x2.xlsx'
