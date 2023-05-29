@@ -57,13 +57,13 @@
 
 %% Inputs 
 
-mass = 5.8967; %kilograms
+mass = 2.72; %kilograms
 Cl = 0.28;
 k = 0.0381; % Amps
-Cd0 = 0.012;
+Cd0 = 0.0268664;
 MotorAngle = 0; %degrees
 ClimbAngle = 10;
-WingSurfaceArea = 0.32980579; %m^2
+WingSurfaceArea = 0.2703478; %m^2
 n = 2.5; %g's
 dist = 1000; %feet
 
